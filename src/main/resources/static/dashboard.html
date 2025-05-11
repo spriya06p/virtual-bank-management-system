@@ -14,32 +14,17 @@
       --text-light: #666;
     }
 
-    /* Background Styling */
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('images/dashboard-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: var(--text-dark);
+      background: linear-gradient(to right, #eef2f3, #8e9eab);
       margin: 0;
       padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      animation: fadeInBody 1s ease-in-out;
-      background-attachment: fixed;
     }
 
-    @keyframes fadeInBody {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    /* Sidebar Styling */
     .d-flex {
       display: flex;
       width: 100%;
@@ -52,7 +37,6 @@
       padding: 30px 20px;
       border-radius: 0 20px 20px 0;
       box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
-      animation: slideIn 1s ease;
     }
 
     .sidebar h4 {
@@ -78,15 +62,13 @@
       transform: translateX(5px);
     }
 
-    /* Page Content Styling */
     #page-content {
       flex: 1;
       padding: 40px;
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: rgba(255, 255, 255, 0.95);
       min-height: 100vh;
       border-radius: 20px 0 0 20px;
       box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
-      animation: fadeIn 0.8s ease;
     }
 
     h2 {
@@ -111,32 +93,11 @@
       color: #000;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(-100px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
     @media (max-width: 768px) {
       .sidebar {
         display: none;
       }
+
       #page-content {
         margin: 0;
         border-radius: 0;
@@ -146,39 +107,43 @@
 </head>
 <body>
 
-<!-- Main Content -->
+<script>
+  // Redirect if not logged in
+  if (!localStorage.getItem("authToken")) {
+    window.location.href = "login.html";
+  }
+</script>
+
 <div class="d-flex">
-  <!-- Sidebar -->
   <div class="sidebar">
     <h4>Virtual Bank</h4>
     <ul class="nav flex-column">
-      <li><a href="user.html" class="nav-link" onclick="loadSection('user')">Users</a></li>
-      <li><a href="loan.html" class="nav-link" onclick="loadSection('loan')">Loans</a></li>
-      <li><a href="branch.html" class="nav-link" onclick="loadSection('branch')">Branches</a></li>
-      <li><a href="transaction.html" class="nav-link" onclick="loadSection('transaction')">Transactions</a></li>
-      <li><a href="#" class="nav-link" onclick="logout()">Logout</a></li>
+      <li><a href="user.html" class="nav-link" onclick="loadSection('User')">Users</a></li>
+      <li><a href="loan.html" class="nav-link" onclick="loadSection('Loan')">Loans</a></li>
+      <li><a href="branch.html" class="nav-link" onclick="loadSection('Branch')">Branches</a></li>
+      <li><a href="transaction.html" class="nav-link" onclick="loadSection('Transaction')">Transactions</a></li>
+      <li><a href="login.html" class="nav-link" onclick="logout()">Logout</a></li>
     </ul>
   </div>
 
-  <!-- Page Content -->
   <div id="page-content">
-    <h2>Welcome To Virtual Bank Management System...</h2>
+    <h2>Welcome To Virtual Bank Management System</h2>
     <div id="main-content">
       <p class="text-muted">Select a section from the left to begin managing your bank's data.</p>
     </div>
+	
   </div>
 </div>
 
-<!-- JS Scripts -->
 <script>
   function logout() {
     localStorage.removeItem("authToken");
-    window.location.href = "index.html";
+    window.location.href = "login.html";
   }
 
   function loadSection(section) {
-    const content = document.getElementById('main-content');
-    content.innerHTML = `<p class="text-muted">You are viewing the ${section} section. Manage the data accordingly.</p>`;
+    document.getElementById('main-content').innerHTML =
+      `<p class="text-muted">You are viewing the <strong>${section}</strong> section. Manage the data accordingly.</p>`;
   }
 </script>
 
